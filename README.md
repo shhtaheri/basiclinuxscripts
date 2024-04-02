@@ -1,0 +1,1 @@
+fdcreator script - create file and direcroty, while you run it on your shell for first time, it'll ask you to run it as a main linux command. If you choose 'y' it will install on your OS and everytime you want to use it, you can call or type 'fd' or 'fdcreator' in your shell. :)
