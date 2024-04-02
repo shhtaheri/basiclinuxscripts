@@ -1,0 +1,86 @@
+#!/bin/bash
+# create a file function 
+file_maker()
+{
+	fn=NULL
+	while [ $fn = NULL ]
+	do
+		read -p "Enter Your FileName: " fn
+	done
+
+	touch $fn
+	echo "** NOTE: If you want to write here, you can clear me :)" > $fn
+	chmod 755 $fn
+	return 1
+}
+dir_maker()
+{
+	dir=NULL
+	while [ $dir = NULL ]
+	do
+		read -p "Enter Your DIR Name: " dir
+	done
+	mkdir $dir
+	cd $dir
+	return 1
+}
+# Main SCRIPT
+read -p "'f' for create a file, 'd' for create a directory, 'fd' for both: " asking
+if [ $asking == "fd" ]
+then
+	dir_maker
+
+	read -n 1 -p "Do you want to make a file?(y/n) " asking2
+	if [ $asking2 == "n" ]
+	then
+		echo "** Bye! I Create 0 file."
+	else
+		# create file function
+		file_maker
+		echo " ** Done! I Created 1 file. More Information:  "
+		ls -ltrha | tail -2
+	fi
+elif [ $asking == 'd' ]
+then
+	dir_maker
+	cd ..
+	echo "DIR Modified! More Information: "
+	ls -ltrha | tail -2
+else
+	file_maker
+	echo " ** File Created! More Information: "
+	ls -ltrha | tail -2
+#	read -p "Enter your directory name: " dir
+#	if [ -f $dir ]
+#	then
+#		echo $dir "is exist."
+	#	if [ read -t 5 -n 1 -p "Press Y if you want to get ls..." ]
+	#	then
+	#		ls -ltrg | tail 5
+	#	fi
+	#else
+	#	mkdir $dir
+	#	cd $dir
+	#	read -p "Enter your filename: " filename
+	#	if [ file_maker $filename -eq 1 ] 
+	#	then
+	#		vi $filename			
+	#	fi
+	#fi
+fi
+
+if [ `ls /usr/bin | grep fdcreator` ]
+then
+	exit 0
+else
+	read -p "Do You want to use this command as a default command on your computer?(y/n) " answer
+	if [ "$answer"=="y" ]
+	then
+		sudo cp fdcreator /usr/bin
+		alias fd=fdcreator
+		exit 0
+	else
+		echo "You press N for negative answer. Good Luuuuck!"
+		exit 0
+	fi
+fi
